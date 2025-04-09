@@ -1,0 +1,56 @@
+{
+  "layer": "top",
+  "modules-left": [
+    "tray"
+  ],
+  "modules-center": [
+    "hyprland/workspaces"
+  ],
+  "modules-right": [
+    "battery",
+    "pulseaudio",
+    "clock",
+    "custom/power"
+  ],
+  "hyprland/workspaces": {
+    "format": "{icon}",
+    "format-icons": {
+      "active": "⬤",
+      "default": "●",
+      "empty": "🞉"
+    },
+    "on-scroll-down": "hyprctl dispatch workspace r-1",
+    "on-scroll-up": "hyprctl dispatch workspace r+1",
+    "persistent-workspaces": {
+      "*": [
+        1,
+        2,
+        3,
+        4,
+        5
+      ]
+    }
+  },
+  "battery": {
+    "format": "{capacity}% {icon}",
+    "format-icons": [
+      "",
+      "",
+      "",
+      "",
+      ""
+    ]
+  },
+  "pulseaudio": {
+    "format": "{volume}%",
+    "on-click": "pavucontrol"
+  },
+  "clock": {
+    "format-alt": "{:%a, %d. %b  %H:%M}"
+  },
+  "custom/power": {
+    "format": "   ",
+    "on-click": "${HOME}/.config/hypr/scripts/wofi/power_menu.sh",
+    "tooltip": "Power Menu"
+  }
+}
