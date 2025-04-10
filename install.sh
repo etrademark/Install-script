@@ -6,8 +6,8 @@ mkdir -p "$installDir/logs"
 
 zsh="zsh"
 hyprland="hyprland noto-fonts kitty"
-dotfiles="rofi wofi wl-clipboard thunar blueman networkmanager network-manager-applet pulseaudio pavucontrol alsa-firmware cava waybar"
-lazyvim="neovim nodejs npm ripgrep stylua lua51 luarocks hererocks fd lazygit fzf ghostscript shfmt ast-grep"
+dotfiles="rofi wofi wl-clipboard thunar blueman networkmanager ttf-jetbrains-mono-nerd ttf-font-awesome network-manager-applet pulseaudio pavucontrol alsa-firmware cava waybar"
+lazyvim="neovim nodejs npm ripgrep stylua lua51 luarocks hererocks fd lazygit fzf ghostscript shfmt ast-grep nix"
 
 asusctl="asusctl supergfxctl rog-control-center"
 
@@ -47,21 +47,28 @@ installOptions=$(whiptail --title "Hyprland-Dots install script" --checklist "Ch
   "lazyvim" "Install LazyVim and neovim text editor (command: nvim)" off \
   "hyprland" "Plain Hyprland without dotfiles (unless previously configured)" off \
   "dotfiles" "Configure Hyprland with etrademark's dotfiles" off \
-  "languages" "Install some additional programming languages and developer tools" off \
+  "developer" "Install some additional programming languages and developer tools" off \
   2>&1 >/dev/tty)
 cancel
 
-echo "${installOptions}"
+if [[ $installOptions == *"languages"* ]]; then
+  echo e
+  #dev=$(whiptail)
+fi
 
-if [ $(hostnamectl = *"ASUSTeK COMPUTER INC."*) ]; then
-  if [[ $(hostnamectl) = *[Ll]"aptop"* ]]; then
-    rog=$(whiptail --title "ROG" --yesno "You seem to have an ASUS device.\nDo you want to install asus-linux and supergfxctl (recommended for ROG and TUF laptops)?" 15 50)
-
-    if [[ ! $? = 0 ]]; then
-      asusctl=""
+function rog_check() {
+  if [[ $(hostnamectl) == *"ASUSTeK COMPUTER INC."* ]]; then
+    if [[ $(hostnamectl) == *[Ll]"aptop"* ]]; then
+      if whiptail --title "ROG" --yesno "You seem to have an ASUS device.\nDo you want to install asus-linux and supergfxctl (recommended for ROG and TUF laptops)?" 10 50; then
+        asusctl=""
+      else
+        echo -e "${NOTE}Installing asus-linux and supergfxctl (recommended for ROG and TUF laptops).\n"
+      fi
     fi
   fi
-fi
+}
+echo -e "${NOTE}Installing required packages and setting up permissions.\n"
+sudo pacman -Sy --noconfirm --needed base-devel cargo git wget curl unzip
 
 if [ "$noHelper" = true ]; then
   aurHelper=$(whiptail --title "AUR Helper not installed." --radiolist \
@@ -84,9 +91,6 @@ if [ "$noHelper" = true ]; then
 
   cd .. && rm -rf $helper
 fi
-
-echo -e "${NOTE}Installing required packages and setting up permissions.\n"
-sudo pacman -Sy --noconfirm --needed base-devel cargo git wget curl unzip
 
 if [[ ! $installOptions == *"zim-powerlevel10k"* ]]; then
   zsh=""
@@ -114,6 +118,12 @@ if [[ $installOptions == *"dotfiles"* ]]; then
   rm -rf "${HOME}/.config/hypr.bak/"
   mv "${HOME}/.config/hypr/" "${HOME}/.config/hypr.bak/"
   git clone "https://github.com/etrademark/Hyprland-Dots" "${HOME}/.config/hypr/"
+elif [[ $installOptions == *"hyprland"* ]]; then
+  echo -e "${NOTE}Installing hyprland with some additional packages.\n"
+  dotfiles=""
+else
+  dotfiles=""
+  hyprland=""
 fi
 
 if [[ ! $installOptions == *"lazyvim"* ]]; then

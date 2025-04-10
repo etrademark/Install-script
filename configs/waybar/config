@@ -13,11 +13,22 @@
     "custom/power"
   ],
   "hyprland/workspaces": {
-    "format": "{icon}",
+    "format": "{icon}{windows}",
     "format-icons": {
-      "active": "⬤",
-      "default": "●",
+      "active": "⬤ ",
+      "default": "● ",
       "empty": "🞉"
+    },
+    "window-rewrite-default": "",
+    "window-rewrite": {
+      "title<.*youtube.*>": "",
+      "class<chrome|chromium>": "",
+      "class<opera|opera-mini|opera-developer>": "<span size='10000'></span>",
+      "class<(firefox|firefox-developer-edition|firefox-beta|floorp|librewolf)>": "<span size='9000'></span>",
+      "class<brave>": "",
+      "title<.*github.*>": "",
+      "kitty": "",
+      "code": "󰨞"
     },
     "on-scroll-down": "hyprctl dispatch workspace r-1",
     "on-scroll-up": "hyprctl dispatch workspace r+1",
