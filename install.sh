@@ -9,6 +9,8 @@ hyprland="hyprland noto-fonts kitty"
 dotfiles="wl-clipboard thunar blueman networkmanager network-manager-applet pulseaudio pavucontrol alsa-firmware cava waybar"
 lazyvim="neovim nodejs npm ripgrep stylua lua51 luarocks hererocks fd lazygit fzf ghostscript shfmt ast-grep"
 
+asusctl="asusctl supergfxctl rog-control-center"
+
 # ANSI Color codes
 RESET='\e[0m'
 RED='\033[0;31m'
@@ -51,11 +53,15 @@ cancel
 
 echo "${installOptions}"
 
-#if [ $(hostnamectl = *"ASUSTeK COMPUTER INC."*) ]; then
-#  if [[ $(hostnamectl) = *[Ll]"aptop"* ]]; then
-#    rog=$(whiptail --title "ROG" --yesno "You seem to have an ASUS device.\nDo you want to install asus-linux and supergfxctl (recommended for ROG and TUF laptops)?" 15 50)
-#  fi
-#fi
+if [ $(hostnamectl = *"ASUSTeK COMPUTER INC."*) ]; then
+  if [[ $(hostnamectl) = *[Ll]"aptop"* ]]; then
+    rog=$(whiptail --title "ROG" --yesno "You seem to have an ASUS device.\nDo you want to install asus-linux and supergfxctl (recommended for ROG and TUF laptops)?" 15 50)
+
+    if [[ ! $? = 0 ]]; then
+      asusctl=""
+    fi
+  fi
+fi
 
 if [ "$noHelper" = true ]; then
   aurHelper=$(whiptail --title "AUR Helper not installed." --radiolist \
@@ -120,4 +126,4 @@ else
 
 fi
 
-$helper -Sy --noconfirm --needed "$hyprland $dotfiles $lazyvim $zsh"
+$helper -Sy --noconfirm --needed $hyprland $dotfiles $lazyvim $zsh $asusctl
