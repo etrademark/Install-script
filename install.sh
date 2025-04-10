@@ -72,7 +72,7 @@ if [ "$noHelper" = true ]; then
   cd "${installDir}/${helper}" || echo -e "${ERROR}Something went wrong. Check your internet connection and try again."
   makepkg -si --noconfirm >"$installDir/logs/$helper.log" 2>&1
   if [ $? -ne 0 ]; then
-    echo -e "${ERROR}Failed to install ${helper}. Check the log in ${CYAN}$installDir/logs/${HELPER}.log${RESET}\n"
+    echo -e "${ERROR}Failed to install ${helper}. Check the log in ${CYAN}$installDir/logs/${helper}.log${RESET}\n"
   fi
 
   cd .. && rm -rf $helper
