@@ -7,7 +7,7 @@ mkdir -p "$installDir/logs"
 zsh="zsh"
 hyprland="hyprland noto-fonts kitty"
 dotfiles="wl-clipboard thunar blueman networkmanager network-manager-applet pulseaudio pavucontrol alsa-firmware cava waybar"
-lazyvim="neovim nodejs npm ripgrep stylua lua51 luarocks hererocks fd lazygit fzf ghostscript"
+lazyvim="neovim nodejs npm ripgrep stylua lua51 luarocks hererocks fd lazygit fzf ghostscript shfmt ast-grep"
 
 # ANSI Color codes
 RESET='\e[0m'
