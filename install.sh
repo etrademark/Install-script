@@ -39,8 +39,8 @@ cancel() {
   fi
 }
 
-whiptail --title "Hyprland-Dots" 'This will remove the backups ending with ".bak" of the applications you will configure later. It will not remove anything unrelated to the things you selected.' 15 75
-cancel
+#whiptail --title "Hyprland-Dots"  'This will remove the backups ending with ".bak" of the applications you will configure later. It will not remove anything unrelated to the things you selected.' 15 75
+#cancel
 
 installOptions=$(whiptail --title "Hyprland-Dots install script" --checklist "Choose options to install or configure" 15 100 5 \
   "zim-powerlevel10k" "Configure and change shell to zsh (+ zim) with powerlevel10k theming" off \
@@ -75,10 +75,11 @@ if [ "$noHelper" = true ]; then
 
   echo -e "${NOTE}Installing the AUR Helper ${helper}.\n"
   git clone "https://aur.archlinux.org/${helper}-bin.git" "${installDir}/${helper}"
+  mkdir -p "${installDir}/${helper}"
   cd "${installDir}/${helper}" || echo -e "${ERROR}Something went wrong. Check your internet connection and try again."
-  makepkg -si --noconfirm >"$installDir/logs/$helper.log" 2>&1
+  makepkg -si --noconfirm
   if [ $? -ne 0 ]; then
-    echo -e "${ERROR}Failed to install ${helper}. Check the log in ${CYAN}$installDir/logs/${helper}.log${RESET}\n"
+    echo -e "${ERROR}Failed to install ${helper}.${RESET}\n"
   fi
 
   cd .. && rm -rf $helper
