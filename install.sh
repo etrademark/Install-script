@@ -110,14 +110,27 @@ else
   mv "${HOME}/.zimrc" "${HOME}/.zimrc.bak"
 
   echo debugtest
-  cp -r ./configs/zsh/* "${HOME}/"
+  cp -r ./zsh/* "${HOME}/"
 fi
 
 if [[ $installOptions == *"dotfiles"* ]]; then
-  echo -e "${NOTE}Installing and configuring hyprland with dotfiles. Backups will be availible at ${CYAN}${HOME}/.config/hypr.bak"
+  echo -e "${NOTE}Installing and configuring hyprland with dotfiles. Backups will be availible at ${CYAN}${HOME}/.config/${RED}config${CYAN}.bak${RESET}\n"
+
+  ## Hyprland
   rm -rf "${HOME}/.config/hypr.bak/"
   mv "${HOME}/.config/hypr/" "${HOME}/.config/hypr.bak/"
   git clone "https://github.com/etrademark/Hyprland-Dots" "${HOME}/.config/hypr/"
+
+  ## Waybar
+  rm -rf "${HOME}/.config/waybar.bak/"
+  mv "${HOME}/.config/waybar/" "${HOME}/.config/waybar.bak/"
+
+  ## Wofi
+  rm -rf "${HOME}/.config/wofi.bak/"
+  mv "${HOME}/.config/wofi/" "${HOME}/.config/wofi.bak/"
+
+  cp -r ./dotconfig/* "${HOME}/.config/"
+
 elif [[ $installOptions == *"hyprland"* ]]; then
   echo -e "${NOTE}Installing hyprland with some additional packages.\n"
   dotfiles=""
@@ -130,7 +143,7 @@ if [[ ! $installOptions == *"lazyvim"* ]]; then
   lazyvim=""
 else
   echo -e "${NOTE}LazyVim will be installed.\n"
-  echo -e "${NOTE}Configuring LazyVim. Backups will be availible in ${CYAN}${HOME}/.config/nvim.bak/${RESET}\n"
+  echo -e "${NOTE}Configuring LazyVim starter. Backups will be availible in ${CYAN}${HOME}/.config/nvim.bak/${RESET}\n"
   rm -rf "${HOME}/.config/nvim/"
   mv "${HOME}/.config/nvim/" "${HOME}/.config/nvim.bak/"
   git clone https://github.com/LazyVim/starter ~/.config/nvim
