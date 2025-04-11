@@ -69,3 +69,7 @@ window#waybar {
 #custom-power {
   margin-right: 20px;
 }
+
+#window, #window * {
+  color: #A9A9A9;
+}
