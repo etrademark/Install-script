@@ -6,7 +6,7 @@ mkdir -p "$installDir/logs"
 
 zsh="zsh"
 hyprland="hyprland noto-fonts kitty"
-dotfiles="rofi wofi wl-clipboard thunar blueman networkmanager ttf-jetbrains-mono-nerd ttf-font-awesome network-manager-applet pulseaudio pavucontrol alsa-firmware cava waybar"
+dotfiles="swaync rofi wofi wl-clipboard thunar blueman networkmanager ttf-jetbrains-mono-nerd ttf-font-awesome network-manager-applet pulseaudio pavucontrol alsa-firmware cava waybar"
 lazyvim="neovim nodejs npm ripgrep stylua lua51 luarocks hererocks fd lazygit fzf ghostscript shfmt ast-grep nix"
 
 asusctl="asusctl supergfxctl rog-control-center"
