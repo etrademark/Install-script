@@ -22,6 +22,7 @@ WARNING=" - ${YELLOW}[${ORANGE}!${YELLOW}]${LIGHT_YELLOW} "
 ERROR=" - ${RED}[${ORANGE}!${RED}] "
 NOTE=" - ${LIGHT_YELLOW}[${RESET}!${LIGHT_YELLOW}]${RESET} "
 IMPORTANT=" - ${RESET}{${CYAN}IMPORTANT${RESET}}${YELLOW} "
+COMMAND="\e[90m"
 echo -e "${WARNING}This script is still in development. Please use it with caution.${RESET}\n"
 
 if hash paru 2>/dev/null; then
@@ -130,6 +131,9 @@ if [[ $installOptions == *"dotfiles"* ]]; then
   mv "${HOME}/.config/wofi/" "${HOME}/.config/wofi.bak/"
 
   cp -r ./dotconfig/* "${HOME}/.config/"
+
+  cp -pr ./misc/Wallpapers/* "${HOME}/Pictures/Wallpapers/"
+  swww-daemon && swww img "${HOME}/Pictures/Wallpapers/wallpaper.jpg" || echo -e "${ERROR}Something went wrong while setting the wallpaper. Try again when you're in Hyprland with ${COMMAND}swww img ${HOME}/Pictures/Wallpapers/wallpaper.jpg${RESET}\n"
 
 elif [[ $installOptions == *"hyprland"* ]]; then
   echo -e "${NOTE}Installing hyprland with some additional packages.\n"
