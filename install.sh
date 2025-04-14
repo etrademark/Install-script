@@ -9,7 +9,7 @@ hyprland="hyprland noto-fonts kitty"
 dotfiles="swaync rofi wofi wl-clipboard thunar blueman networkmanager ttf-jetbrains-mono-nerd ttf-font-awesome network-manager-applet pulseaudio pavucontrol alsa-firmware cava waybar"
 lazyvim="neovim nodejs npm ripgrep stylua lua51 luarocks hererocks fd lazygit fzf ghostscript shfmt ast-grep nix"
 
-asusctl="asusctl supergfxctl rog-control-center"
+asusctl="" #asusctl supergfxctl rog-control-center"
 
 # ANSI Color codes
 RESET='\e[0m'
@@ -111,7 +111,7 @@ else
   mv "${HOME}/.zimrc" "${HOME}/.zimrc.bak"
 
   echo debugtest
-  cp -r ./zsh/* "${HOME}/"
+  cp -r ./zsh/. "${HOME}/"
 fi
 
 if [[ $installOptions == *"dotfiles"* ]]; then
