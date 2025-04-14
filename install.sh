@@ -5,11 +5,19 @@ installDir="./output"
 mkdir -p "$installDir/logs"
 
 zsh="zsh"
-hyprland="hyprland noto-fonts kitty"
+hyprland="hyprland noto-fonts noto-fonts-cjk kitty"
 dotfiles="swaync rofi wofi wl-clipboard thunar blueman networkmanager ttf-jetbrains-mono-nerd ttf-font-awesome network-manager-applet pulseaudio pavucontrol alsa-firmware cava waybar"
-lazyvim="neovim nodejs npm ripgrep stylua lua51 luarocks hererocks fd lazygit fzf ghostscript shfmt ast-grep nix"
 
-asusctl="" #asusctl supergfxctl rog-control-center"
+# Dev
+# Let me know if you have any packages for me to add here
+lazyvim="unzip curl wget neovim nodejs npm ripgrep stylua lua51 luarocks hererocks fd lazygit fzf ghostscript shfmt ast-grep nix cargo"
+c="gcc gdb glibc"
+golang="go delve"
+rust="rustup cargo"
+jdk="jdk-openjdk"
+python="python pip"
+
+asusctl="asusctl supergfxctl rog-control-center"
 
 # ANSI Color codes
 RESET='\e[0m'
@@ -21,9 +29,9 @@ CYAN='\033[0;36m' # Directories
 WARNING=" - ${YELLOW}[${ORANGE}!${YELLOW}]${LIGHT_YELLOW} "
 ERROR=" - ${RED}[${ORANGE}!${RED}] "
 NOTE=" - ${LIGHT_YELLOW}[${RESET}!${LIGHT_YELLOW}]${RESET} "
-IMPORTANT=" - ${RESET}{${CYAN}IMPORTANT${RESET}}${YELLOW} "
+IMPORTANT=" - ${RESET}[${CYAN}IMPORTANT${RESET}]${YELLOW} "
 COMMAND="\e[90m"
-echo -e "${WARNING}This script is still in development. Please use it with caution.${RESET}\n"
+echo -e "${WARNING}This script is still in development. Please use it with caution.${RESET}\n${IMPORTANT}All back-upped configurations ending with .bak will be removed if this script is in use of it as it moves all old config to it and overwrites the old ones."
 
 if hash paru 2>/dev/null; then
   helper='paru'
@@ -40,36 +48,85 @@ cancel() {
   fi
 }
 
-#whiptail --title "Hyprland-Dots"  'This will remove the backups ending with ".bak" of the applications you will configure later. It will not remove anything unrelated to the things you selected.' 15 75
-#cancel
-
 installOptions=$(whiptail --title "Hyprland-Dots install script" --checklist "Choose options to install or configure" 15 100 5 \
   "zim-powerlevel10k" "Configure and change shell to zsh (+ zim) with powerlevel10k theming" off \
-  "lazyvim" "Install LazyVim and neovim text editor (command: nvim)" off \
   "hyprland" "Plain Hyprland without dotfiles (unless previously configured)" off \
   "dotfiles" "Configure Hyprland with etrademark's dotfiles" off \
-  "developer" "Install some additional programming languages and developer tools" off \
+  "developer" "Select some additional programming languages and developer tools" off \
   2>&1 >/dev/tty)
 cancel
 
-if [[ $installOptions == *"languages"* ]]; then
-  echo e
-  #dev=$(whiptail)
+if [[ $installOptions == *"developer"* ]]; then
+  dev=$(whiptail --title "development tools" --checklist "Checklist" 25 80 10 \
+    "lazyvim" "Install LazyVim and NeoVim text editor/\"ide\" (command: nvim)" off \
+    "c/c++" "C and C++ with GCC compiler and GDB debugger" off \
+    "rust" "Install Rust stable with rustup" off \
+    "golang" "Go with Delve debugger" off \
+    "jdk" "Installation of jdk (jdk-openjdk) with JDB as debugger" off \
+    "python" "Install python with virtualenvs and pip" off \
+    2>&1 >/dev/tty)
+  cancel
+
+  ### --- LazyVim --- ###
+  if [[ ! $installOptions == *"lazyvim"* ]]; then
+    lazyvim=""
+  else
+    echo -e "${NOTE}LazyVim will be installed.\n"
+    echo -e "${NOTE}Configuring LazyVim starter. Backups will be availible in ${CYAN}${HOME}/.config/nvim.bak/${RESET}\n"
+    rm -rf "${HOME}/.config/nvim/"
+    mv "${HOME}/.config/nvim/" "${HOME}/.config/nvim.bak/"
+    git clone https://github.com/LazyVim/starter ~/.config/nvim
+  fi
+
+  ### --- C/C++ --- ###
+  if [[ ! $installOptions == *"c/c++"* ]]; then
+    c=""
+  fi
+
+  ### --- Rust --- ###
+  if [[ ! $installOptions == *"rust"* ]]; then
+    rust=""
+  fi
+
+  ### --- Go --- ###
+  if [[ ! $installOptions == *"golang"* ]]; then
+    golang=""
+  fi
+
+  ### --- JDK --- ###
+  if [[ ! $installOptions == *"jdk"* ]]; then
+    jdk=""
+  fi
+
+  ### --- python --- ###
+  if [[ ! $installOptions == *"python"* ]]; then
+    python=""
+  fi
+
+  ### -------------- ###
+  devel="${c} ${rust} ${golang} ${jdk} ${python}"
 fi
 
 function rog_check() {
   if [[ $(hostnamectl) == *"ASUSTeK COMPUTER INC."* ]]; then
     if [[ $(hostnamectl) == *[Ll]"aptop"* ]]; then
       if whiptail --title "ROG" --yesno "You seem to have an ASUS device.\nDo you want to install asus-linux and supergfxctl (recommended for ROG and TUF laptops)?" 10 50; then
-        asusctl=""
+        return 1
       else
         echo -e "${NOTE}Installing asus-linux and supergfxctl (recommended for ROG and TUF laptops).\n"
+        return 0
       fi
     fi
   fi
+  return 1
 }
+
+if ! rog_check; then
+  asusctl=""
+fi
+
 echo -e "${NOTE}Installing required packages and setting up permissions.\n"
-sudo pacman -Sy --noconfirm --needed base-devel cargo git wget curl unzip
+sudo pacman -Sy --noconfirm --needed base-devel git curl
 
 if [ "$noHelper" = true ]; then
   aurHelper=$(whiptail --title "AUR Helper not installed." --radiolist \
@@ -143,15 +200,8 @@ else
   hyprland=""
 fi
 
-if [[ ! $installOptions == *"lazyvim"* ]]; then
-  lazyvim=""
-else
-  echo -e "${NOTE}LazyVim will be installed.\n"
-  echo -e "${NOTE}Configuring LazyVim starter. Backups will be availible in ${CYAN}${HOME}/.config/nvim.bak/${RESET}\n"
-  rm -rf "${HOME}/.config/nvim/"
-  mv "${HOME}/.config/nvim/" "${HOME}/.config/nvim.bak/"
-  git clone https://github.com/LazyVim/starter ~/.config/nvim
+$helper -Sy --noconfirm --needed $hyprland $dotfiles $lazyvim $zsh $asusctl $devel
 
+if [[ $dev == *"rust"* ]]; then
+  rustup default stable || echo -e "${ERROR}Failed to run rustup. Perhaps you already have the rust package installed?${RESET}\n"
 fi
-
-$helper -Sy --noconfirm --needed $hyprland $dotfiles $lazyvim $zsh $asusctl
