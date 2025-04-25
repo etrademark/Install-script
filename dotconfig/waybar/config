@@ -5,7 +5,8 @@
     "hyprland/window"
   ],
   "modules-center": [
-    "hyprland/workspaces"
+    "hyprland/workspaces",
+    "temperature"
   ],
   "modules-right": [
     "battery",
@@ -16,7 +17,7 @@
   ],
   "hyprland/window": {
     "format": "{title}",
-    "max-length": 50,
+    "max-length": 50
   },
   "hyprland/workspaces": {
     "format": "{icon}{windows}",
@@ -47,6 +48,13 @@
         5
       ]
     }
+  },
+  "temperature": {
+    "critical-threshold": 75,
+    "format-critical": "{temperatureC}°C ",
+    "format": "{temperatureC}°C ",
+    "tooltip": "Open resource manager",
+    "on-click": "kitty btop"
   },
   "battery": {
     "format": "{capacity}% {icon}",

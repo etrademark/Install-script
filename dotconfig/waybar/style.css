@@ -1,48 +1,49 @@
 * {
   font-family: "JetBrainsMono Nerd Font", "Font Awesome 6 Free", sans-serif;
   font-size: 14px;
-  color: #fff;
   padding: 1px 0;
-  border-radius: 5px;
-  background: transparent;
 }
 
-window .modules-right {
-  background: rgba(20, 20, 20, 0.6);
-  padding: 0 10px 0 10px;
+window .modules-center {
+  border-radius: 0 0 15px 15px;
+  background: rgba(20, 20, 20, 0.9);
 }
 
 window#waybar {
   background: rgba(20, 20, 20, 0.3);
-  border-bottom: 2px solid #444;
   padding: 4px 10px;
 }
-
-#workspaces {
-  margin: 0 10px;
-  background: rgba(20, 20, 20, 0.9);
-}
-
 #workspaces button {
   padding: 0 8px;
   margin: 0 2px;
   border-radius: 999px;
   background: transparent;
-  color: #888;
+  color: #fff;
   transition: all 0.2s ease-in-out;
 }
 
 #workspaces button.active {
+  padding: 0 15px;
+  transition: all 0.4s ease-in-out;
   color: #0fa;
 }
 
 #workspaces button.empty {
-  color: #555;
+  color: #bfbfbf;
 }
 
 #workspaces button:hover {
-  background-color: rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.1);
   color: #fff;
+}
+
+#temperature {
+  color: #fff;
+  padding: 0 10px;
+}
+
+#temperature.critical {
+  color: #f33;
 }
 
 #clock, 
@@ -75,9 +76,13 @@ window#waybar {
 }
 
 #custom-power {
-  margin-right: 10px;
+  margin-right: 15px;
 }
 
 #window, #window * {
   color: #A9A9A9;
 }
+#tray menu menuitem:hover {
+  background-color: rgba(20, 20, 20, 0.5);
+}
+
