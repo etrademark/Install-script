@@ -2,17 +2,25 @@
   font-family: "JetBrainsMono Nerd Font", "Font Awesome 6 Free", sans-serif;
   font-size: 14px;
   color: #fff;
+  padding: 1px 0;
+  border-radius: 5px;
   background: transparent;
 }
 
+window .modules-right {
+  background: rgba(20, 20, 20, 0.6);
+  padding: 0 10px 0 10px;
+}
+
 window#waybar {
-  background: rgba(20, 20, 20, 0.9);
+  background: rgba(20, 20, 20, 0.3);
   border-bottom: 2px solid #444;
   padding: 4px 10px;
 }
 
 #workspaces {
   margin: 0 10px;
+  background: rgba(20, 20, 20, 0.9);
 }
 
 #workspaces button {
@@ -67,7 +75,7 @@ window#waybar {
 }
 
 #custom-power {
-  margin-right: 20px;
+  margin-right: 10px;
 }
 
 #window, #window * {
