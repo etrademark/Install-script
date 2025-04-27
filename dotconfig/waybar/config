@@ -10,7 +10,7 @@
   ],
   "modules-right": [
     "battery",
-    "pulseaudio",
+    "wireplumber",
     "custom/notification",
     "clock",
     "custom/power"
@@ -22,20 +22,28 @@
   "hyprland/workspaces": {
     "format": "{icon}{windows}",
     "format-icons": {
-      "active": "⬤ ",
-      "default": "● ",
-      "empty": "🞉"
+      //"default": "● ",
+      "empty": "●"
     },
     "window-rewrite-default": "",
     "window-rewrite": {
-      "title<.*youtube.*>": "",
-      "class<chrome|chromium>": "",
-      "class<opera|opera-mini|opera-developer>": "<span size='10000'></span>",
-      "class<(firefox|firefox-developer-edition|firefox-beta|floorp|librewolf)>": "<span size='9000'></span>",
-      "class<brave>": "",
-      "title<.*github.*>": "",
-      "kitty": "",
-      "code": "󰨞"
+      "title<.*youtube.*>": " ",
+      "class<chrome|chromium>": " ",
+      "class<opera|opera-mini|opera-developer>": " ",
+      "class<(firefox|firefox-developer-edition|firefox-beta|floorp|librewolf)>": " ",
+      "class<brave>": " ",
+      "class<discord|vesktop|webcord>": " ",
+      "class<steam>": " ",
+      "class<supertux.*>": " ",
+      "class<minecraft.*|prismlauncher|atlauncher>": " 󰍳",
+      "title<minecraft.*>": " 󰍳",
+      "title<.*github.*>": " ",
+      "kitty": " ",
+      "title<nvim.*>": " ",
+      "title<vi.*>": " ",
+      "title<.*emacs.*": " ",
+      "code": " 󰨞",
+      "Hyprland Polkit Agent*": " 󰀇"
     },
     "on-scroll-down": "hyprctl dispatch workspace r-1",
     "on-scroll-up": "hyprctl dispatch workspace r+1",
@@ -66,9 +74,10 @@
       ""
     ]
   },
-  "pulseaudio": {
+  "wireplumber": {
     "format": "{volume}%",
-    "on-click": "pavucontrol"
+    "on-click": "wpctl set-mute @DEFAULT_SINK@ toggle",
+    "on-click-right": "pavucontrol"
   },
   "clock": {
     "format-alt": "{:%a, %d. %b  %H:%M}"
