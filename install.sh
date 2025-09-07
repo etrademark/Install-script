@@ -178,6 +178,8 @@ if [[ $installOptions == *"dotfiles"* ]]; then
   rm -rf "${HOME}/.config/hypr.bak/"
   mv "${HOME}/.config/hypr/" "${HOME}/.config/hypr.bak/"
   git clone "https://github.com/etrademark/Hyprland-Dots" "${HOME}/.config/hypr/"
+  cd "${HOME}/.config/hypr/"
+  git checkout 608a8ac9d5a59accdb462a2825983cb95faaeb94
 
   ## Waybar
   rm -rf "${HOME}/.config/waybar.bak/"
@@ -191,7 +193,6 @@ if [[ $installOptions == *"dotfiles"* ]]; then
 
   cp -pr ./misc/Wallpapers/* "${HOME}/Pictures/Wallpapers/"
   swww-daemon && swww img "${HOME}/Pictures/Wallpapers/wallpaper.jpg" || echo -e "${ERROR}Something went wrong while setting the wallpaper. Try again when you're in Hyprland with ${COMMAND}swww img ${HOME}/Pictures/Wallpapers/wallpaper.jpg${RESET}\n"
-
 elif [[ $installOptions == *"hyprland"* ]]; then
   echo -e "${NOTE}Installing hyprland with some additional packages.\n"
   dotfiles=""
