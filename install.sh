@@ -6,7 +6,7 @@ mkdir -p "$installDir/logs"
 
 zsh="zsh"
 hyprland="hyprland noto-fonts noto-fonts-cjk kitty"
-dotfiles="swaync rofi-wayland wofi wl-clipboard thunar blueman networkmanager ttf-jetbrains-mono-nerd ttf-font-awesome network-manager-applet pavucontrol alsa-firmware cava waybar"
+dotfiles="swaync rofi-wayland wofi wl-clipboard thunar blueman networkmanager ttf-jetbrains-mono-nerd ttf-font-awesome network-manager-applet pavucontrol alsa-firmware cava waybar swww"
 
 # Dev
 # Let me know if you have any packages for me to add here
